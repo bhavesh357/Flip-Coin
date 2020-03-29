@@ -2,6 +2,8 @@
 #Constants
 declare -A singletCount
 declare -A singletPercentage
+declare -A doubletCount
+declare -A doubletPercentage
 function flipCoin() {
 	if [ $(($RANDOM%2)) -eq 1 ]
 	then 
@@ -17,21 +19,35 @@ function getPercentage() {
 	do
 		percentageArray[$result]=$(($((${countArray[$result]}*100))/$3))
 	done
+	echo ${!countArray[@]}
+	echo ${countArray[@]}
+	echo ${!percentageArray[@]}
+	echo ${percentageArray[@]}
 }
 function singletCombinations() {
-	singletCount["H"]=0
-	singletCount["T"]=0
 	for((i=0;i<$1;i++))
 	do
 		result=$(flipCoin)
 		singletCount[$result]=$((${singletCount[$result]}+1))
 	done
-	echo ${!singletCount[@]}
-	echo ${singletCount[@]}
 	getPercentage singletCount singletPercentage $1
-	echo ${!singletPercentage[@]}
-	echo ${singletPercentage[@]}
+}
+function doubletCombinations() {
+	for ((i=0;i<$1;i++))
+	do
+		result=""
+		for ((j=0;j<2;j++))
+		do
+			singleFlip=$(flipCoin)
+			result=$result$(flipCoin)
+			echo $result
+		done
+		echo $result
+		doubletCount[$result]=$((${doubletCount[$result]}+1))
+	done
+	getPercentage doubletCount doubletPercentage $1
 }
 echo "Welcome to flip coin simulation"
 flipCoin
 singletCombinations 10
+doubletCombinations 10
