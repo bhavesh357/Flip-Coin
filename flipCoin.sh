@@ -4,6 +4,8 @@ declare -A singletCount
 declare -A singletPercentage
 declare -A doubletCount
 declare -A doubletPercentage
+declare -A tripletCount
+declare -A tripletPercentage
 function flipCoin() {
 	if [ $(($RANDOM%2)) -eq 1 ]
 	then 
@@ -38,7 +40,6 @@ function doubletCombinations() {
 		result=""
 		for ((j=0;j<2;j++))
 		do
-			singleFlip=$(flipCoin)
 			result=$result$(flipCoin)
 			echo $result
 		done
@@ -47,7 +48,22 @@ function doubletCombinations() {
 	done
 	getPercentage doubletCount doubletPercentage $1
 }
+function tripletCombinations() {
+	for ((i=0;i<$1;i++))
+	do
+		result=""
+		for ((j=0;j<3;j++))
+		do
+			result=$result$(flipCoin)
+			echo $result
+		done
+		echo $result
+		tripletCount[$result]=$((${tripletCount[$result]}+1))
+	done
+	getPercentage tripletCount tripletPercentage $1
+}
 echo "Welcome to flip coin simulation"
 flipCoin
 singletCombinations 10
 doubletCombinations 10
+tripletCombinations 10
