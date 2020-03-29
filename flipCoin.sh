@@ -76,11 +76,7 @@ function getSortedValues() {
 		newArray[count]=${combinationsCount[$key]}
 		((count++))
 	done
-	echo ${newArray[@]}
-	for ((i=0;i<count;i++))
-	do
-		echo ${newArray[i]}
-	done | sort -r
+	echo ${$2[@]}
 }
 function getWinningCombinations() {
 	declare -n combinationsDict=$1
