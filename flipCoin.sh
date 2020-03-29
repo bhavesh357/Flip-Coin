@@ -24,10 +24,6 @@ function getPercentage() {
 	do
 		percentageArray[$result]=$(($((${countArray[$result]}*100))/$3))
 	done
-	echo ${!countArray[@]}
-	echo ${countArray[@]}
-	echo ${!percentageArray[@]}
-	echo ${percentageArray[@]}
 }
 function singletCombinations() {
 	for((i=0;i<$1;i++))
@@ -44,9 +40,7 @@ function doubletCombinations() {
 		for ((j=0;j<2;j++))
 		do
 			result=$result$(flipCoin)
-			echo $result
 		done
-		echo $result
 		doubletCount[$result]=$((${doubletCount[$result]}+1))
 	done
 	getPercentage doubletCount doubletPercentage $1
@@ -58,9 +52,7 @@ function tripletCombinations() {
 		for ((j=0;j<3;j++))
 		do
 			result=$result$(flipCoin)
-			echo $result
 		done
-		echo $result
 		tripletCount[$result]=$((${tripletCount[$result]}+1))
 	done
 	getPercentage tripletCount tripletPercentage $1
@@ -84,11 +76,8 @@ function sortArray() {
 		temp=${tempArray[i]}
 		tempArray[i]=${tempArray[indexOfLargest]}
 		tempArray[indexOfLargest]=$temp
-		echo ${tempArray[@]}
 	done
-	echo ${tempArray[@]}
-	echo ${doubletSortedCount[@]}
-}
+	}
 function getSortedValues() {
 	declare -n combinationsCount=$1
 	count=0
@@ -99,14 +88,11 @@ function getSortedValues() {
 		newArray[count]=${combinationsCount[$key]}
 		((count++))
 	done
-	echo ${newArray[@]}
-	echo ${doubletSortedCount[@]}
 	sortArray newArray
 }
 function getWinningCombinations() {
 	declare -n combinationsDict=$1
 	declare -n sortedArray=$2
-	echo ${sortedArray[@]}
 	max=${sortedArray[0]}
 	winner=""
 	for key in "${!combinationsDict[@]}"
