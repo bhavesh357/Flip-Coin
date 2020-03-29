@@ -59,7 +59,6 @@ function tripletCombinations() {
 }
 function sortArray() {
 	declare -n tempArray=$1
-	
 	count=${#tempArray[@]}
 	for ((i=0;i<$count;i++))
 	do
