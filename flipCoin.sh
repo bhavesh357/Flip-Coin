@@ -9,6 +9,9 @@ declare -A doubletPercentage
 declare -A tripletCount
 declare -a tripletSortedCount
 declare -A tripletPercentage
+declare -A commonCount
+declare -a commonSortedCount
+declare -A commonPercentage
 
 function flipCoin() {
 	if [ $(($RANDOM%2)) -eq 1 ]
@@ -29,16 +32,18 @@ function getPercentage() {
 }
 
 function singletCombinations() {
-	for((i=0;i<$1;i++))
+	numberOfTimes=$1
+	for((i=0;i<$numberOfTimes;i++))
 	do
 		result=$(flipCoin)
 		singletCount[$result]=$((${singletCount[$result]}+1))
 	done
-	getPercentage singletCount singletPercentage $1
+	getPercentage singletCount singletPercentage $numberOfTimes
 }
 
 function doubletCombinations() {
-	for ((i=0;i<$1;i++))
+	numberOfTimes=$1
+	for ((i=0;i<$numberOfTimes;i++))
 	do
 		result=""
 		for ((j=0;j<2;j++))
@@ -47,11 +52,12 @@ function doubletCombinations() {
 		done
 		doubletCount[$result]=$((${doubletCount[$result]}+1))
 	done
-	getPercentage doubletCount doubletPercentage $1
+	getPercentage doubletCount doubletPercentage $numberOfTimes
 }
 
 function tripletCombinations() {
-	for ((i=0;i<$1;i++))
+	numberOfTimes=$1
+	for ((i=0;i<$numberOfTimes;i++))
 	do
 		result=""
 		for ((j=0;j<3;j++))
@@ -60,7 +66,22 @@ function tripletCombinations() {
 		done
 		tripletCount[$result]=$((${tripletCount[$result]}+1))
 	done
-	getPercentage tripletCount tripletPercentage $1
+	getPercentage tripletCount tripletPercentage $numberOfTimes
+}
+
+function getCombinations() {
+	numberOfTimes=$1
+	sizeOfCombination=$2
+	for ((i=0;i<$numberOfTimes;i++))
+	do
+		result=""
+		for ((j=0;j<$sizeOfCombination;j++))
+		do
+			result=$result$(flipCoin)
+		done
+		commonCount[$result]=$((${commonCount[$result]}+1))
+	done
+	getPercentage commonCount commonPercentage $numberOfTimes
 }
 
 function sortArray() {
@@ -124,3 +145,6 @@ getWinningCombinations doubletCount doubletSortedCount
 tripletCombinations 10
 getSortedValues tripletCount tripletSortedCount
 getWinningCombinations tripletCount tripletSortedCount
+getCombinations 10 3
+getSortedValues commonCount commonSortedCount
+getWinningCombinations commonCount commonSortedCount
