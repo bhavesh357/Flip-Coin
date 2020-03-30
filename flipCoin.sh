@@ -1,5 +1,5 @@
 #!/bin/bash -x
-#Constants
+#variables
 declare -A singletCount
 declare -a singletSortedCount
 declare -A singletPercentage
@@ -9,6 +9,7 @@ declare -A doubletPercentage
 declare -A tripletCount
 declare -a tripletSortedCount
 declare -A tripletPercentage
+
 function flipCoin() {
 	if [ $(($RANDOM%2)) -eq 1 ]
 	then 
@@ -17,6 +18,7 @@ function flipCoin() {
 		echo "T"
 	fi
 }
+
 function getPercentage() {
 	declare -n countArray=$1
 	declare -n percentageArray=$2
@@ -25,6 +27,7 @@ function getPercentage() {
 		percentageArray[$result]=$(($((${countArray[$result]}*100))/$3))
 	done
 }
+
 function singletCombinations() {
 	for((i=0;i<$1;i++))
 	do
@@ -33,6 +36,7 @@ function singletCombinations() {
 	done
 	getPercentage singletCount singletPercentage $1
 }
+
 function doubletCombinations() {
 	for ((i=0;i<$1;i++))
 	do
@@ -45,6 +49,7 @@ function doubletCombinations() {
 	done
 	getPercentage doubletCount doubletPercentage $1
 }
+
 function tripletCombinations() {
 	for ((i=0;i<$1;i++))
 	do
@@ -57,6 +62,7 @@ function tripletCombinations() {
 	done
 	getPercentage tripletCount tripletPercentage $1
 }
+
 function sortArray() {
 	declare -n tempArray=$1
 	count=${#tempArray[@]}
@@ -76,7 +82,8 @@ function sortArray() {
 		tempArray[i]=${tempArray[indexOfLargest]}
 		tempArray[indexOfLargest]=$temp
 	done
-	}
+}
+
 function getSortedValues() {
 	declare -n combinationsCount=$1
 	count=0
@@ -89,6 +96,7 @@ function getSortedValues() {
 	done
 	sortArray newArray
 }
+
 function getWinningCombinations() {
 	declare -n combinationsDict=$1
 	declare -n sortedArray=$2
@@ -104,6 +112,7 @@ function getWinningCombinations() {
 	done
 	echo $winner is winning combination
 }
+
 echo "Welcome to flip coin simulation"
 flipCoin
 singletCombinations 10
