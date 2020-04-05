@@ -1,14 +1,5 @@
 #!/bin/bash -x
 #variables
-declare -A singletCount
-declare -a singletSortedCount
-declare -A singletPercentage
-declare -A doubletCount
-declare -a doubletSortedCount
-declare -A doubletPercentage
-declare -A tripletCount
-declare -a tripletSortedCount
-declare -A tripletPercentage
 declare -A commonCount
 declare -a commonSortedCount
 declare -A commonPercentage
@@ -29,44 +20,6 @@ function getPercentage() {
 	do
 		percentageArray[$result]=$(($((${countArray[$result]}*100))/$3))
 	done
-}
-
-function singletCombinations() {
-	numberOfTimes=$1
-	for((i=0;i<$numberOfTimes;i++))
-	do
-		result=$(flipCoin)
-		singletCount[$result]=$((${singletCount[$result]}+1))
-	done
-	getPercentage singletCount singletPercentage $numberOfTimes
-}
-
-function doubletCombinations() {
-	numberOfTimes=$1
-	for ((i=0;i<$numberOfTimes;i++))
-	do
-		result=""
-		for ((j=0;j<2;j++))
-		do
-			result=$result$(flipCoin)
-		done
-		doubletCount[$result]=$((${doubletCount[$result]}+1))
-	done
-	getPercentage doubletCount doubletPercentage $numberOfTimes
-}
-
-function tripletCombinations() {
-	numberOfTimes=$1
-	for ((i=0;i<$numberOfTimes;i++))
-	do
-		result=""
-		for ((j=0;j<3;j++))
-		do
-			result=$result$(flipCoin)
-		done
-		tripletCount[$result]=$((${tripletCount[$result]}+1))
-	done
-	getPercentage tripletCount tripletPercentage $numberOfTimes
 }
 
 function getCombinations() {
@@ -136,15 +89,6 @@ function getWinningCombinations() {
 
 echo "Welcome to flip coin simulation"
 flipCoin
-singletCombinations 10
-getSortedValues singletCount singletSortedCount
-getWinningCombinations singletCount singletSortedCount
-doubletCombinations 10
-getSortedValues doubletCount doubletSortedCount
-getWinningCombinations doubletCount doubletSortedCount
-tripletCombinations 10
-getSortedValues tripletCount tripletSortedCount
-getWinningCombinations tripletCount tripletSortedCount
 getCombinations 10 3
 getSortedValues commonCount commonSortedCount
 getWinningCombinations commonCount commonSortedCount
